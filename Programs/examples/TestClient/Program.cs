@@ -102,7 +102,12 @@ namespace OpenMetaverse.TestClient
                             lineNumber++;
                             string[] tokens = line.Trim().Split(' ', ',');
 
-                            if (tokens.Length >= 3)
+                            if (tokens.Length > 0 &&
+                                tokens[0].Substring(0, 1) == "#")
+                            {
+                                Logger.Log($"Avatar Loading: {line.Trim()}", Helpers.LogLevel.Debug);
+                            }
+                            else if (tokens.Length >= 3)
                             {
                                 account = new LoginDetails
                                 {
@@ -175,7 +180,10 @@ namespace OpenMetaverse.TestClient
             ClientManager.Instance.Start(accounts, getTextures);
 
             if (!string.IsNullOrEmpty(scriptFile))
+            {
+                Logger.Log("Running script command file " + scriptFile, Helpers.LogLevel.Info);
                 ClientManager.Instance.DoCommandAll("script " + scriptFile, UUID.Zero);
+            }
 
             // Then Run the ClientManager normally
             ClientManager.Instance.Run(noGUI);

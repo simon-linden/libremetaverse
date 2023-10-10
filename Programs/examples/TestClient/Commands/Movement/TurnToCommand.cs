@@ -1,4 +1,4 @@
-﻿/*
+/*
  * Copyright (c) 2006-2016, openmetaverse.co
  * All rights reserved.
  *
@@ -52,7 +52,8 @@ namespace OpenMetaverse.TestClient.Commands.Movement
             newDirection.Z = (float)z;
             Client.Self.Movement.TurnToward(newDirection);
             Client.Self.Movement.SendUpdate(false);
-            return "Turned to ";
+            return "Turned to " + x.ToString("0.0") + " " + y.ToString("0.0")
+                                + " " + z.ToString("0.0");
         }
     }
 }

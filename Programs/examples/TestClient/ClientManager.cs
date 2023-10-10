@@ -57,7 +57,7 @@ namespace OpenMetaverse.TestClient
         public bool Running = true;
         public bool GetTextures = false;
         public volatile int PendingLogins = 0;
-        public string onlyAvatar = string.Empty;
+        public string onlyAvatar = string.Empty;    // If not empty, only this avatar will get commands
 
         ClientManager()
         {
@@ -284,13 +284,13 @@ namespace OpenMetaverse.TestClient
             if ('@' == firstToken[0]) {
                 onlyAvatar = string.Empty;
                 if (tokens.Length == 3) {
-                    onlyAvatar = tokens[1]+" "+tokens[2];
-                    bool found = Clients.Values.Any(client => (client.ToString() == onlyAvatar) && (client.Network.Connected));
+                    onlyAvatar = tokens[1] + " " + tokens[2];
+                    bool found = Clients.Values.Any(client => (onlyAvatar.Equals(client.ToString(), StringComparison.OrdinalIgnoreCase)) && (client.Network.Connected));
 
                     Logger.Log(
                         found
                             ? $"Commanding only {onlyAvatar} now"
-                            : $"Commanding nobody now. Avatar {onlyAvatar} is offline", Helpers.LogLevel.Info);
+                            : $"Commanding nobody now. Avatar {onlyAvatar} not found or offline", Helpers.LogLevel.Info);
                 } else {
                     Logger.Log("Commanding all avatars now", Helpers.LogLevel.Info);
                 }
@@ -357,7 +357,8 @@ namespace OpenMetaverse.TestClient
                         delegate(object state)
                         {
                             TestClient testClient = (TestClient)state;
-                            if ((string.Empty == onlyAvatar) || (testClient.ToString() == onlyAvatar)) {
+                            if ((string.Empty == onlyAvatar) ||
+                                 onlyAvatar.Equals(testClient.ToString(), StringComparison.OrdinalIgnoreCase)) {
                                 if (testClient.Commands.ContainsKey(firstToken)) {
                                     string result;
                                     try {
