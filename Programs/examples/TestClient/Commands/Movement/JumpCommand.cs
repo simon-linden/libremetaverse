@@ -5,14 +5,24 @@ namespace OpenMetaverse.TestClient
         public JumpCommand(TestClient testClient)
 		{
 			Name = "jump";
-			Description = "Jumps or flies up";
+			Description = "Jumps or flies up.  Add 'stop' to finish";
             Category = CommandCategory.Movement;
 		}
 
         public override string Execute(string[] args, UUID fromAgentID)
 		{
-            Client.Self.Jump(true);
-            return "Jumped";
+            bool start = !(args.Length == 1 && args[0].ToLower() == "stop");
+
+            if (start)
+            {
+                Client.Self.Jump(true);
+                return "Started jumping";
+            }
+            else
+            {
+                Client.Self.Jump(false);
+                return "Stopped jumping";
+            }
 		}
     }
 }
