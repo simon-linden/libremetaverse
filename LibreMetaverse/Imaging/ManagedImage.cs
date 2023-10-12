@@ -119,6 +119,7 @@ namespace OpenMetaverse.Imaging
         }
 
 #if !NO_UNSAFE
+#pragma warning disable CA1416          // Lots of windows-only code here
         /// <summary>
         /// 
         /// </summary>

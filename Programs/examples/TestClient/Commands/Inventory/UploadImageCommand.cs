@@ -31,6 +31,8 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using OpenMetaverse.Imaging;
 
+#pragma warning disable CA1416          // Lots of windows-only code here
+
 namespace OpenMetaverse.TestClient
 {
     public class UploadImageCommand : Command

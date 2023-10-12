@@ -154,6 +154,8 @@ namespace OpenMetaverse.Imaging
             }
         }
 
+#pragma warning disable CA1416      // Lots of Windows code here
+
         static unsafe void decodeLine(
             BitmapData b,
             int line,

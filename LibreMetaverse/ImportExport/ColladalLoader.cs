@@ -41,6 +41,8 @@ using OpenMetaverse.Imaging;
 
 namespace OpenMetaverse.ImportExport
 {
+#pragma warning disable CA1416      // Lots of Windows code here
+
     /// <summary>
     /// Parsing Collada model files into data structures
     /// </summary>

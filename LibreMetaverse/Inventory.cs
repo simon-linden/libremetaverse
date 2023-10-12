@@ -330,6 +330,10 @@ namespace OpenMetaverse
             return Contains(obj.UUID);
         }
 
+        // 'BinaryFormatter.Serialize() and Deserialize() are obsolete:
+        // See https://aka.ms/binaryformatter for more information
+#pragma warning disable SYSLIB0011
+
         /// <summary>
         /// Saves the current inventory structure to a cache file
         /// </summary>
