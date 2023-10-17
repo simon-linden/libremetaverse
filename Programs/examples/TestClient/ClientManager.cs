@@ -269,8 +269,21 @@ namespace OpenMetaverse.TestClient
         {
             if (cmd == null)
                 return;
-            string[] tokens = cmd.Trim().Split(' ', '\t');
-            if (tokens.Length == 0)
+
+            string[] raw_tokens = cmd.Trim().Split(' ', '\t');
+            List<String> tokens = new List<string>();
+
+            // Get rid of annoying leading and trailing spaces so command line is friendlier
+            for (int token_index = 0; token_index < raw_tokens.Length; token_index++)
+            {
+                string trim_token = raw_tokens[token_index].Trim();
+                if (trim_token.Length > 0)
+                {
+                    tokens.Add(trim_token);
+                }
+            }
+
+            if (tokens.Count == 0)
                 return;
             
             string firstToken = tokens[0].ToLower();
@@ -283,7 +296,7 @@ namespace OpenMetaverse.TestClient
 
             if ('@' == firstToken[0]) {
                 onlyAvatar = string.Empty;
-                if (tokens.Length == 3) {
+                if (tokens.Count == 3) {
                     onlyAvatar = tokens[1] + " " + tokens[2];
                     bool found = Clients.Values.Any(client => (onlyAvatar.Equals(client.ToString(), StringComparison.OrdinalIgnoreCase)) && (client.Network.Connected));
 
@@ -296,10 +309,10 @@ namespace OpenMetaverse.TestClient
                 }
                 return;
             }
-            
-            string[] args = new string[tokens.Length - 1];
+
+            string[] args = new string[tokens.Count - 1];
             if (args.Length > 0)
-                Array.Copy(tokens, 1, args, 0, args.Length);
+                args = tokens.Skip(1).ToArray();
 
             if (firstToken == "login")
             {
