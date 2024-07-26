@@ -48,6 +48,7 @@ namespace OpenMetaverse.TestClient
             Settings.ALWAYS_REQUEST_OBJECTS = true;
             Settings.SEND_AGENT_UPDATES = true;
             Settings.USE_ASSET_CACHE = true;
+            Settings.MULTIPLE_SIMS = true;
 
             Network.RegisterCallback(PacketType.AgentDataUpdate, AgentDataUpdateHandler);
             Network.LoginProgress += LoginHandler;

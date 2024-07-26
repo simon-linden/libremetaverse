@@ -344,6 +344,12 @@ namespace OpenMetaverse.TestClient
                 ScriptCommand command = new ScriptCommand(null);
                 Logger.Log(command.Execute(args, UUID.Zero), Helpers.LogLevel.Info);
             }
+            else if (firstToken == "echo")
+            {
+                // Just put text into output
+                string echo_msg = String.Join(" ", raw_tokens.Skip(1));
+                Logger.Log($"{echo_msg}\n", Helpers.LogLevel.Info);
+            }
             else if (firstToken == "waitforlogin")
             {
                 // Special exception to allow this to run before any bots have logged in
